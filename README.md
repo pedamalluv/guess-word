@@ -1,3 +1,8 @@
+Versions: 
+
+# 0.0.1
+** Working model, pushing for testing in web
+
 # GuessWord
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.

@@ -1,0 +1,25 @@
+<div class="container">
+    <h2>Dictionary Lookup</h2>
+    <input type="text" [(ngModel)]="word" placeholder="Enter a word..." />
+    <button (click)="searchWord()">Search</button>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <div *ngIf="definitions.length > 0">
+        <h3>Results for: {{ word }}</h3>
+        <div *ngFor="let def of definitions">
+            <h4>{{ def.word }}</h4>
+            <p><strong>Phonetic:</strong> {{ def.phonetic }}</p>
+            <ul>
+                <li *ngFor="let meaning of def.meanings">
+                    <strong>{{ meaning.partOfSpeech }}</strong>
+                    <ul>
+                        <li *ngFor="let definition of meaning.definitions">
+                            {{ definition.definition }}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
