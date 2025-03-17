@@ -1,0 +1,20 @@
+<div class="container">
+
+    <!-- <input [(ngModel)]="text" placeholder="Type here..." /> -->
+
+    <app-virtual-keyboard (keyPress)="handleKeyPress($event)" [disabledKeys]="disabledKeys"></app-virtual-keyboard>
+
+    <!-- <div style="color: green; border: 1px solid orange;">
+    Guess Word : {{guessWord}}
+</div> -->
+    <ng-container *ngFor="let item of guesses">
+        <div>
+            <span *ngFor="let letter of item.word | split">{{ letter }}</span> {{ item.matchingLettersCount }} -- {{ item.matchedCharacterCount}}
+        </div>
+    </ng-container>
+    <span *ngFor="let letter of text | split">{{ letter }}</span>
+
+    <div style="color: red;">{{errorMessage}}</div>
+
+    <!-- {{disabledKeys | json}} -->
+</div>
