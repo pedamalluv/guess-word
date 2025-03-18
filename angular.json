@@ -17,8 +17,8 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/guess-word"
-                        "baseHref": "/guess-word/",
+                        "outputPath": "dist/guess-word",
+                        "baseHref": "/guess-word",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
