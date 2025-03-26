@@ -180,6 +180,8 @@ export class LandingPageComponent implements OnInit {
 
   handleSelectionChange(event: Config) {
     this.config = event;
+    this.guesses = [];
+    this.text = '';
     this.generateGuessWord()
     console.log('Updated Selection:', this.config);
   }
