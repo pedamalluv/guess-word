@@ -26,7 +26,7 @@ export class LandingPageComponent implements OnInit {
   text: string = '';
   config: Config = {
     maxLength: 4,
-    maxTries: 4
+    maxTries: 8
   }
 
   guesses : { word: string; matchingLettersCount: number; matchedCharacterCount: number; }[] = [];
@@ -45,14 +45,35 @@ export class LandingPageComponent implements OnInit {
     this.generateGuessWord();
   }
 
+  range() {
+    return this.config.maxLength - this.text.length;
+  }
+
+
   generateGuessWord() {
+
+    // this.dictionaryService.generateRandomword(this.config.maxLength).subscribe({
+    //   next: (word) => {
+    //     if (this.hasRepeatedLetters(word[0])  || !(word && word[0].length === this.config.maxLength)) {
+    //       this.generateGuessWord();
+    //     } else {
+    //       this.guessWord = word[0];
+    //       console.log(this.guessWord);
+    //     }
+    //   },
+    //   error: () => {
+    //     this.errorMessage = 'Word not Generated';
+    //   }
+    // });
+
+    // below code is for generating the random word by node module, gives error or wrong words after multiple tries
     const word = generate({ 
                     minLength: this.config.maxLength,
                     maxLength: this.config.maxLength,
                     exactly: 1, 
                     formatter: (word) => word.toUpperCase(),
                  });
-    if (this.hasRepeatedLetters(word[0])) {
+    if (this.hasRepeatedLetters(word[0])  || !(word && word[0].length == this.config.maxLength)) {
       this.generateGuessWord();
     } else {
       this.guessWord = word[0];
@@ -155,6 +176,12 @@ export class LandingPageComponent implements OnInit {
       },
     });
 
+  }
+
+  handleSelectionChange(event: Config) {
+    this.config = event;
+    this.generateGuessWord()
+    console.log('Updated Selection:', this.config);
   }
 
 }

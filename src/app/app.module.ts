@@ -16,6 +16,10 @@ import { AlphabetInputComponent } from 'src/app/components/alphabet-input/alphab
 import { VirtualKeyboardComponent } from './components/virtual-keyboard/virtual-keyboard.component';
 import { SplitPipe } from './directives/split.pipe';
 import { DisableElementPipe } from './directives/disable-element.pipe';
+import { GameSettingsComponent } from 'src/app/components/game-settings/game-settings.component';
+import { ModalComponent } from 'src/app/shared/modal/modal.component';
+import { SliderComponent } from 'src/app/shared/slider/slider.component';
+import { HeaderComponent } from 'src/app/shared/header/header.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import { DisableElementPipe } from './directives/disable-element.pipe';
     VirtualKeyboardComponent,
     SplitPipe,
     DisableElementPipe,
+    GameSettingsComponent,
+    ModalComponent,
+    SliderComponent,
+    HeaderComponent,
     
   ],
   imports: [

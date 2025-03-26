@@ -6,11 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DictionaryService {
-  private apiUrl = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
-
+  
   constructor(private http: HttpClient) {}
-
+  
   getWordDefinition(word: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}${word}`);
+    const apiUrl = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+    return this.http.get<any>(`${apiUrl}${word}`);
+  }
+  generateRandomword(wordLength: number): Observable<any> {
+    const apiURL = 'https://random-word-api.vercel.app/api?words=1&length=';
+    return this.http.get<any>(`${apiURL}${wordLength}`);
   }
 }

@@ -1,0 +1,10 @@
+<div class="slider-container">
+    <label for="customSlider">{{title}}</label>
+    <input type="range" id="customSlider" class="form-range" [min]="min" [max]="max" [step]="step" [value]="value" (input)="onSliderChange($event)" />
+    <div class="slider-value">{{ value }} {{helpText}}</div>
+</div>
+
+<!-- Slider Usage  -->
+<!-- <p>Pick a Word Size</p>
+    <app-slider [min]="3" [max]="5" [step]="1" [value]="selectedValue" [title]="'Pick a Word Size'" [helpText]="'letters'" (valueChange)="updateValue($event)">
+    </app-slider> -->

@@ -1,0 +1,19 @@
+.word-stack {
+    display: grid;
+    gap: 0.25rem;
+    .word {
+        display: flex;
+        justify-content: center;
+        gap: 0.25rem;
+        .letter {
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            width: 40px;
+            height: 40px;
+            font-size: 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

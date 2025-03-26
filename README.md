@@ -1,6 +1,9 @@
 Versions: 
 
 # 0.0.1
+** added settings, moved key board to bottom and styles the words initial
+
+# 0.0.1
 ** Working model, pushing for testing in web
 
 # GuessWord
