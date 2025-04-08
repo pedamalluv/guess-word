@@ -1,7 +1,7 @@
-<div class="container">
-    <app-header></app-header>
+<div class="container-fluid">
+    <app-header (selectionChange)="handleSelectionChange($event)"></app-header>
     <!-- <input [(ngModel)]="text" placeholder="Type here..." /> -->
-    <app-game-settings (selectionChange)="handleSelectionChange($event)"></app-game-settings>
+    <!-- <app-game-settings (selectionChange)="handleSelectionChange($event)"></app-game-settings> -->
     <app-virtual-keyboard (keyPress)="handleKeyPress($event)" [disabledKeys]="disabledKeys"></app-virtual-keyboard>
 
     <!-- <div style="color: green; border: 1px solid orange;">
@@ -10,15 +10,59 @@
     <div class="word-stack">
         <ng-container *ngFor="let item of guesses">
             <div class="word">
-                <span class="letter" *ngFor="let letter of item.word | split">{{ letter }}</span> {{ item.matchingLettersCount }} -- {{ item.matchedCharacterCount}}
+                <span class="letter" *ngFor="let letter of item.word | split">{{ letter }}</span>
+
+                <span class="matching-badges">
+                    <i class="bi bi-crosshair success"></i>
+                    <span class="count success">{{ item.matchedCharacterCount || 0}}</span>
+                </span>
+                <span class="matching-badges">
+                    <i class="bi bi-shuffle warning"></i>
+                    <span class="count warning">{{ item.matchingLettersCount || 0}}</span>
+                </span>
+
+                <!-- <ng-container *ngIf="item.matchingLettersCount; else noMatchA">
+                    <span class="badge bg-success">{{ item.matchingLettersCount || '-'}}</span>
+                </ng-container>
+                <ng-template #noMatchA>
+                    <i class="bi bi-question-circle-fill text-muted"></i>
+                </ng-template>
+                <ng-container *ngIf="item.matchedCharacterCount; else noMatchB">
+                    <span class="badge bg-success">{{ item.matchedCharacterCount || '-' }}</span>
+                </ng-container>
+                <ng-template #noMatchB>
+                    <i class="bi bi-shuffle text-muted"></i>
+                </ng-template>
+                -- {{ item.matchedCharacterCount}}
+                <i class="bi-crosshair"></i>
+                <i class="bi-check-circle"></i>
+                <i class="bi-x-circle"></i> -->
+
             </div>
         </ng-container>
         <div class="word">
             <span class="letter" *ngFor="let letter of text | split">{{ letter }}</span>
-            <!-- <span class="letter" *ngFor="let _ of range(); let i = index"></span> -->
-        </div>
+            <span class="letter" *ngFor="let _ of  getPlaceholders(); let i = index"></span>
+            <span class="matching-badges">
+                <i class="bi bi-crosshair success"></i>
+                <span class="count success">0</span>
+            </span>
+            <span class="matching-badges">
+                <i class="bi bi-shuffle warning"></i>
+                <span class="count warning">0</span>
+            </span>
 
-        <div style="color: red;">{{errorMessage}}</div>
+        </div>
     </div>
     <!-- {{disabledKeys | json}} -->
 </div>
+
+<app-modal [showModal]="isModalVisible" [showHeader]="false" [showFooter]="false" [title]="''" (closeModal)="isModalVisible = false">
+    <div class="message-container">
+        <span>{{message}}</span>
+        <button class="btn funky-ok-btn" (click)="isModalVisible = false">
+            <i class="bi bi-emoji-laughing"></i> OK!
+        </button>
+    </div>
+</app-modal>
+<app-async-loader *ngIf="isLoading"></app-async-loader>

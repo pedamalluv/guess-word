@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { generate, count } from "random-words";
 import { DictionaryService } from '../../services/dictionary.service';
+import confetti from 'canvas-confetti';
 
 
 interface Config {
@@ -22,17 +23,19 @@ interface Guess {
 })
 
 export class LandingPageComponent implements OnInit {
+  isModalVisible: boolean = false;
   guessWord: string = '';
   text: string = '';
   config: Config = {
     maxLength: 4,
     maxTries: 8
   }
+  isLoading: boolean = false;
 
   guesses : { word: string; matchingLettersCount: number; matchedCharacterCount: number; }[] = [];
 
 
-  errorMessage: string = '';
+  message: string = '';
 
 
   definitions: any[] = [];
@@ -45,13 +48,10 @@ export class LandingPageComponent implements OnInit {
     this.generateGuessWord();
   }
 
-  range() {
-    return this.config.maxLength - this.text.length;
-  }
 
 
   generateGuessWord() {
-
+    this.isLoading = true;
     // this.dictionaryService.generateRandomword(this.config.maxLength).subscribe({
     //   next: (word) => {
     //     if (this.hasRepeatedLetters(word[0])  || !(word && word[0].length === this.config.maxLength)) {
@@ -62,7 +62,7 @@ export class LandingPageComponent implements OnInit {
     //     }
     //   },
     //   error: () => {
-    //     this.errorMessage = 'Word not Generated';
+    //     this.message = 'Word not Generated';
     //   }
     // });
 
@@ -78,11 +78,12 @@ export class LandingPageComponent implements OnInit {
     } else {
       this.guessWord = word[0];
       console.log(this.guessWord);
+      this.isLoading = false;
     }
   }
 
   handleKeyPress(key: string) {
-    this.errorMessage = '';
+    this.message = '';
     if (key === 'Backspace') {
       this.text = this.text.slice(0, -1);
     } else if (key === 'Enter') {
@@ -91,10 +92,11 @@ export class LandingPageComponent implements OnInit {
         if (!isWordValid.repeated) {
             this.searchWord(this.text);
         } else if (isWordValid.repeated) {
-          this.errorMessage = 'Letters Repeated';
+          this.message = 'That letter’s already been on stage, superstar! 🌟🎭';
+          this.isModalVisible = true;
         } 
         // else if (isWordValid.sequential) {
-        //   this.errorMessage = 'Sequential Letters not allowed';
+        //   this.message = 'Sequential Letters not allowed';
         // }
       }
     } else if (this.text.length < this.config.maxLength){
@@ -146,10 +148,13 @@ export class LandingPageComponent implements OnInit {
   }
 
   searchWord(word: string) {
+    this.isLoading = true;
     if (!word.trim()) return;
     let isValidWord = false;
     this.dictionaryService.getWordDefinition(word).subscribe({
       next: (data) => {
+
+        this.isLoading = false;
         // this.definitions = data;
         // !isWordValid.sequential : not checking for sequential
         const tryWord = this.getMatchingDetails(word);
@@ -159,20 +164,32 @@ export class LandingPageComponent implements OnInit {
         }
         this.text = '';
         if (word === this.guessWord) {
-          this.errorMessage = "Guess Correctly";
+          this.message = "🎯 Bullseye! You nailed it!";
+          this.isModalVisible = true;
+          this.launchFireworks();
+          setTimeout(() => {
+            this.resetTheGame()
+          }, 5000);
         } else {
           if (this.guesses.length === this.config.maxTries) {
-            this.errorMessage = "Sorry Max Tries Over, Right Word :" + this.guessWord;
+            this.message =  "📢 Buzzer! You've reached max attempts. Word was " + this.guessWord;
+            this.isModalVisible = true;
+            setTimeout(() => {
+              this.resetTheGame()
+            }, 5000);
           } else {
-            this.errorMessage = "";
+            this.message = "";
+            this.isModalVisible = false;
           }
         }
         
       },
       error: () => {
         // this.definitions = [];
-        this.errorMessage = 'Word not found!';
+        this.message = '🧠 Nice try, word wizard! But that one’s not in our spellbook.';
+        this.isModalVisible = true;
         isValidWord = false;
+        this.isLoading= false
       },
     });
 
@@ -184,6 +201,52 @@ export class LandingPageComponent implements OnInit {
     this.text = '';
     this.generateGuessWord()
     console.log('Updated Selection:', this.config);
+  }
+
+  resetTheGame() {
+    this.config  = {
+      maxLength: 4,
+      maxTries: 8
+    };
+    this.guesses = [];
+    this.text = '';
+    this.message = '';
+    this.isModalVisible = false;
+    this.disabledKeys = [];
+    this.generateGuessWord();
+  }
+
+  getPlaceholders(): number[] {
+    const n = this.config.maxLength - this.text.length;
+    return Array(n).fill(0).map((_, i) => i);
+  }
+
+  launchFireworks(): void {
+    const duration = 5 * 1000; // 3 seconds
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+  
+    const interval: any = setInterval(() => {
+      const timeLeft = animationEnd - Date.now();
+  
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        return;
+      }
+  
+      const particleCount = 50 * (timeLeft / duration);
+  
+      // fire from random locations
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: {
+          x: Math.random(),
+          y: Math.random() - 0.2
+        },
+        colors: ['#ff4dde', '#38b6ff', '#8eff63', '#ffe261']
+      });
+    }, 250);
   }
 
 }

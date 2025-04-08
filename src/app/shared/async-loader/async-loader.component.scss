@@ -1,0 +1,79 @@
+$colors: #ff6f61,
+#de4d86,
+#8e44ad,
+#f39c12,
+#2ecc71;
+.color-pulse-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 2rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    .letter {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        background-color: #eee;
+        color: #fff;
+        animation: pulse 1.2s infinite;
+    }
+    // Staggered animation delays
+    .letter:nth-child(1) {
+        animation-delay: 0s;
+        background-color: nth($colors, 1);
+    }
+    .letter:nth-child(2) {
+        animation-delay: 0.15s;
+        background-color: nth($colors, 2);
+    }
+    .letter:nth-child(3) {
+        animation-delay: 0.3s;
+        background-color: nth($colors, 3);
+    }
+    .letter:nth-child(4) {
+        animation-delay: 0.45s;
+        background-color: nth($colors, 4);
+    }
+    .letter:nth-child(5) {
+        animation-delay: 0.6s;
+        background-color: nth($colors, 5);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.back-drop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}

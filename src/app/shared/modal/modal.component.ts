@@ -9,6 +9,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ModalComponent {
   @Input() showModal: boolean = false;  // Control modal visibility
   @Input() title: string = 'Modal Title'; // Dynamic title
+  @Input() showFooter: boolean = false; // Show or hide footer
+  @Input() showHeader: boolean = true; // Show or hide header
   @Output() closeModal: EventEmitter<void> = new EventEmitter();
 
   close() {

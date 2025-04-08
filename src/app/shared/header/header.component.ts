@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+interface Config {
+  maxLength: number,
+  maxTries: number
+}
 
 @Component({
   selector: 'app-header',
@@ -6,5 +11,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-
+  @Output() selectionChange = new EventEmitter<{ maxLength: number, maxTries: number }>();
+    
+  handleSelectionChange(event: Config) {
+    return this.selectionChange.emit(event);
+  }
 }

@@ -1,7 +1,10 @@
 .keyboard-container {
     left: 0;
     right: 0;
-    bottom: 1rem;
+    bottom: 0;
+    padding: 0.5rem 0;
+    background-color: #aaa;
+    z-index: -1;
     .keyboard {
         display: flex;
         flex-direction: column;
@@ -20,7 +23,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: #f8f9fa; // Bootstrap light gray
+                background: #eee; // Bootstrap light gray
                 border: 1px solid #ccc;
                 border-radius: 6px;
                 font-size: 18px;

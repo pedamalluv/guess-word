@@ -20,6 +20,8 @@ import { GameSettingsComponent } from 'src/app/components/game-settings/game-set
 import { ModalComponent } from 'src/app/shared/modal/modal.component';
 import { SliderComponent } from 'src/app/shared/slider/slider.component';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
+import { AsyncLoaderComponent } from 'src/app/shared/async-loader/async-loader.component';
+import { HealthComponent } from 'src/app/components/health/health.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { HeaderComponent } from 'src/app/shared/header/header.component';
     ModalComponent,
     SliderComponent,
     HeaderComponent,
+    AsyncLoaderComponent,
+    HealthComponent,
     
   ],
   imports: [

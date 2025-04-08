@@ -1,6 +1,5 @@
-<button class="btn btn-primary" (click)="openModal()">Game Settings</button>
-
-<app-modal [showModal]="isModalVisible" [title]="''" (closeModal)="closeModal()">
+<i class="bi bi-joystick" (click)="openModal()"></i>
+<app-modal [showModal]="isModalVisible" [title]="''" [showFooter]="true" (closeModal)="closeModal()">
 
     <div class="container">
         <div>
