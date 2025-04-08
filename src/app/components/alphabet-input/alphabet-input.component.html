@@ -1,3 +1,0 @@
-<div class="input-container">
-    <input #inputBox *ngFor="let letter of letters; let i = index" maxlength="1" (input)="handleInput(i, $event)" (keydown)="handleBackspace(i, $event)" type="text" class="letter-box" />
-</div>
